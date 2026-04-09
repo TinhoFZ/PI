@@ -5,7 +5,7 @@ export default function Nav() {
     return(
         <nav className="bg-primary px-6 py-4 w-full sticky top-0 z-1000">
             <div className="flex items-center">
-                <Link to="/" className="text-snow font-bold text-2xl">TreasureApp</Link>
+                <Link to="/" className="text-snow font-bold text-2xl">Placeholder</Link>
 
                 <div className="mx-auto space-x-6">
                     <Link to="/map" className="text-snow hover:underline">Mapa</Link>
@@ -13,7 +13,8 @@ export default function Nav() {
 
                 <Button 
                     text='Login'
-                    route='/login'
+                    route='/'
+                    className='text-gray-400 cursor-not-allowed'
                 />
             </div>
         </nav>

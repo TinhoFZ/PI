@@ -14,6 +14,7 @@ export default function MapPage() {
   const [activeQuest, setActiveQuest] = useState<any>(null)
   const [mapCenter, setMapCenter] = useState<[number, number]>([-8.0632, -34.8711])
 
+  // Calculo para pegar o centro da zona
   const getCenter = (zone: [number, number][]) => {
     const lat = zone.reduce((sum, p) => sum + p[0], 0) / zone.length
     const lng = zone.reduce((sum, p) => sum + p[1], 0) / zone.length
@@ -31,24 +32,27 @@ export default function MapPage() {
 
       <div className="relative w-full h-[calc(100dvh-72px)]">
         
-        {/* Sidebar */}
         <QuestSidebar 
           quests={quests}
           onSelect={handleSelectQuest}
         />
 
+        {/* "Configurações" do mapa */}
         <MapContainer 
             center={mapCenter}
             zoom={15}
             zoomControl={false}
             className="w-full h-full"
         >
+
+          {/* Centralizar mapa no centro da zona */}
           <MapController center={mapCenter} />
 
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
+          {/* Adicionar zonas e marcadores no mapa */}
           {quests.map(q => (
             <Fragment key={q.id}>
               <MapZone 
