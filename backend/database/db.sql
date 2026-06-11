@@ -110,3 +110,88 @@ CREATE TABLE user_reward (
         REFERENCES rewards(reward_id)
         ON DELETE CASCADE
 );
+
+INSERT INTO zones (name, description, geometry)
+VALUES
+(
+    'Marco Zero',
+    'Centro histórico do Recife',
+    JSON_ARRAY(
+        JSON_ARRAY(-8.0632, -34.8711),
+        JSON_ARRAY(-8.0627, -34.8702),
+        JSON_ARRAY(-8.0618, -34.8709),
+        JSON_ARRAY(-8.0624, -34.8718)
+    )
+),
+(
+    'Instituto Ricardo Brennand',
+    'Museu e castelo',
+    JSON_ARRAY(
+        JSON_ARRAY(-8.0625, -34.9580),
+        JSON_ARRAY(-8.0610, -34.9605),
+        JSON_ARRAY(-8.0590, -34.9590),
+        JSON_ARRAY(-8.0605, -34.9570)
+    )
+),
+(
+    'Parque da Jaqueira',
+    'Área de lazer e caminhada',
+    JSON_ARRAY(
+        JSON_ARRAY(-8.0357, -34.9108),
+        JSON_ARRAY(-8.0347, -34.9095),
+        JSON_ARRAY(-8.0335, -34.9105),
+        JSON_ARRAY(-8.0345, -34.9118)
+    )
+);
+
+INSERT INTO quests (
+    zone_id,
+    partner_id,
+    name,
+    description
+)
+VALUES
+(
+    1,
+    NULL,
+    'Fotografe o Marco Zero',
+    'Tire uma foto do Marco Zero e envie para o mural.'
+),
+(
+    1,
+    NULL,
+    'Encontre a Placa Histórica',
+    'Localize a placa histórica próxima ao monumento.'
+),
+(
+    2,
+    NULL,
+    'Explore o Castelo',
+    'Visite a entrada principal do Instituto Ricardo Brennand.'
+);
+
+INSERT INTO treasures (
+    zone_id,
+    name,
+    description,
+    coordinate
+)
+VALUES
+(
+    1,
+    'Moeda Colonial',
+    'Uma antiga moeda encontrada no Recife Antigo.',
+    JSON_ARRAY(-8.0625, -34.8710)
+),
+(
+    1,
+    'Mapa Rasgado',
+    'Fragmento de um mapa antigo.',
+    JSON_ARRAY(-8.0620, -34.8705)
+),
+(
+    2,
+    'Espada Cerimonial',
+    'Uma espada exposta no castelo.',
+    JSON_ARRAY(-8.0615, -34.9590)
+);
