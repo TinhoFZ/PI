@@ -16,5 +16,10 @@ router.get(
     authenticate,
     questController.getMyQuests
 );
+router.post(
+    "/:questId/complete",
+    authenticate,
+    questController.completeQuest
+);
 
 module.exports = router;
