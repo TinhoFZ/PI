@@ -26,6 +26,17 @@ async function collectTreasure(req, res) {
         const userId = req.user.userId;
         const treasureId = req.params.treasureId;
 
+        const [treasures] = await db.query(
+            `
+            SELECT xp_reward
+            FROM treasures
+            WHERE treasure_id = ?
+            `,
+            [treasureId]
+        );
+
+        const reward = treasures[0].xp_reward;
+
         const [existing] = await db.query(
             `
             SELECT *
@@ -50,6 +61,17 @@ async function collectTreasure(req, res) {
             `,
             [userId, treasureId]
         );
+
+        await db.query(
+            `
+            UPDATE users
+            SET xp = xp + ?
+            WHERE user_id = ?
+            `,
+            [reward, userId]
+        );
+
+        await createLog(userId, "TREASURE_COLLECTED", `Tesouro coletado: ID ${treasureId}, XP ganho: ${reward}`);
 
         res.json({
             message: "Tesouro coletado"

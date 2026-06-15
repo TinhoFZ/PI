@@ -17,6 +17,8 @@ async function register(req, res) {
             [name, email, hashedPassword]
         );
 
+        await createLog(null, "USER_REGISTERED", `Novo usuário registrado: ${email}`);
+
         res.status(201).json({
             message: "Usuário criado com sucesso"
         });
@@ -68,6 +70,8 @@ async function login(req, res) {
                 expiresIn: process.env.JWT_EXPIRES_IN
             }
         );
+
+        await createLog(user.user_id, "USER_LOGGED_IN", `Usuário logado: ${email}`);
 
         res.json({
             token
