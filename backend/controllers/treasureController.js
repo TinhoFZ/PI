@@ -1,4 +1,5 @@
 const db = require("../database/connection");
+const { createLog } = require("../utils/logger");
 
 async function getAllTreasures(req, res) {
     try {

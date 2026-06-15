@@ -1,6 +1,7 @@
 const db = require("../database/connection");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { createLog } = require("../utils/logger");
 
 async function register(req, res) {
     try {

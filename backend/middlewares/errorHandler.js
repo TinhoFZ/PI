@@ -1,4 +1,4 @@
-const db = require("../models/db");
+const db = require("../database/connection");
 
 async function errorHandler(err, req, res, next) {
 

@@ -1,4 +1,5 @@
 const db = require("../database/connection");
+const { createLog } = require("../utils/logger");
 
 async function getAllQuests(req, res) {
     try {

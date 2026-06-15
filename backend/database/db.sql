@@ -111,6 +111,34 @@ CREATE TABLE user_reward (
         ON DELETE CASCADE
 );
 
+CREATE TABLE logs (
+    log_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NULL,
+    action VARCHAR(100) NOT NULL,
+    description TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id)
+        REFERENCES users(user_id)
+        ON DELETE SET NULL
+);
+
+CREATE TABLE error_logs (
+    error_log_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NULL,
+    route VARCHAR(255) NOT NULL,
+    method VARCHAR(10) NOT NULL,
+    status_code INT NOT NULL,
+    error_message TEXT NULL,
+    ip_address VARCHAR(45),
+    user_agent TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id)
+        REFERENCES users(user_id)
+        ON DELETE SET NULL
+);
+
 INSERT INTO zones (name, description, geometry)
 VALUES
 (
@@ -195,3 +223,13 @@ VALUES
     'Uma espada exposta no castelo.',
     JSON_ARRAY(-8.0615, -34.9590)
 );
+
+ALTER TABLE quests
+ADD COLUMN xp_reward INT DEFAULT 100;
+
+ALTER TABLE treasures
+ADD COLUMN xp_reward INT DEFAULT 50;
+
+ALTER TABLE user_quest
+ADD CONSTRAINT unique_user_quest
+UNIQUE(user_id, quest_id);

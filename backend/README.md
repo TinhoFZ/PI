@@ -1,359 +1,151 @@
-# STOG API
+STOG API - Coleção Postman
 
-API Backend do projeto **STOG (Sistema de Turismo Online e Gamificado)**.
+Coleção Postman oficial da API do projeto STOG.
 
-O STOG transforma o turismo em uma experiência gamificada de caça ao tesouro, permitindo que usuários explorem locais reais, encontrem tesouros virtuais, completem missões e recebam recompensas.
+Esta coleção foi criada para facilitar os testes dos endpoints disponíveis no backend, incluindo autenticação, gerenciamento de missões, tesouros e zonas de exploração.
 
----
+Requisitos
 
-# Tecnologias Utilizadas
+Antes de utilizar a coleção, certifique-se de possuir:
 
-* Node.js
-* Express.js
-* MySQL
-* JWT (JSON Web Token)
-* bcrypt
-* Postman
+Postman instalado
+API STOG em execução
+Banco de dados configurado
+Usuário cadastrado para autenticação
+Configuração do Ambiente
 
----
+Crie um Environment no Postman com as seguintes variáveis:
 
-# URL Base
+Variável	Valor Exemplo
+baseUrl	http://localhost:3000
+token	
 
-```http
-http://localhost:3000
-```
 
----
+Após realizar login, copie o token JWT retornado pela API e salve-o na variável token.
 
-# Autenticação
+Autenticação
 
-A API utiliza autenticação via JWT.
+A API utiliza autenticação JWT.
 
-Após realizar login, envie o token no cabeçalho das requisições protegidas:
+Todas as rotas protegidas utilizam o cabeçalho:
 
-```http
-Authorization: Bearer SEU_TOKEN
-```
+Authorization: Bearer {{token}}
+Estrutura da Coleção
+Auth
+Register User
 
----
+Cria um novo usuário.
 
-# Endpoints
+POST {{baseUrl}}/auth/register
 
-## Cadastro de Usuário
+Exemplo de body:
 
-Cria uma nova conta.
-
-### Requisição
-
-```http
-POST /auth/register
-```
-
-### Body
-
-```json
 {
-    "name": "Eduardo",
-    "email": "e@a.com",
-    "password": "123456"
+  "name": "Eduardo",
+  "email": "e@a.com",
+  "password": "123456"
 }
-```
-
-### Resposta
-
-```json
-{
-    "message": "Usuário cadastrado com sucesso"
-}
-```
-
----
-
-## Login
+Login User
 
 Autentica um usuário e retorna um token JWT.
 
-### Requisição
+POST {{baseUrl}}/auth/login
 
-```http
+Exemplo de body:
+
+{
+  "email": "e@a.com",
+  "password": "123456"
+}
+Get Current User
+
+Retorna os dados do usuário autenticado.
+
+GET {{baseUrl}}/auth/me
+Zones
+Get All Zones
+
+Lista todas as zonas cadastradas.
+
+GET {{baseUrl}}/zones
+Quests
+Get All Quests
+
+Lista todas as missões disponíveis.
+
+GET {{baseUrl}}/quests
+Accept Quest
+
+Aceita uma missão para o usuário autenticado.
+
+POST {{baseUrl}}/quests/{questId}/accept
+
+Exemplo:
+
+POST {{baseUrl}}/quests/2/accept
+My Quests
+
+Lista as missões aceitas pelo usuário autenticado.
+
+GET {{baseUrl}}/quests/my-quests
+Treasures
+Get All Treasures
+
+Lista todos os tesouros disponíveis.
+
+GET {{baseUrl}}/treasures
+Collect Treasure
+
+Registra a coleta de um tesouro.
+
+POST {{baseUrl}}/treasures/{treasureId}/collect
+
+Exemplo:
+
+POST {{baseUrl}}/treasures/2/collect
+Fluxo Recomendado de Testes
+1. Registrar Usuário
+
+Execute:
+
+POST /auth/register
+2. Realizar Login
+
+Execute:
+
 POST /auth/login
-```
 
-### Body
+Copie o token retornado.
 
-```json
-{
-    "email": "e@a.com",
-    "password": "123456"
-}
-```
+3. Atualizar Variável JWT
 
-### Resposta
+Cole o token recebido na variável:
 
-```json
-{
-    "token": "JWT_TOKEN"
-}
-```
+token
+4. Testar Rotas Protegidas
 
----
+Após configurar o token, execute:
 
-# Zonas
+Get Current User
+Accept Quest
+My Quests
+Get All Treasures
+Collect Treasure
+Funcionalidades Cobertas
 
-As zonas representam áreas geográficas onde missões e tesouros podem ser encontrados.
+A coleção permite testar:
 
-## Listar Todas as Zonas
+Cadastro de usuários
+Login JWT
+Consulta do usuário autenticado
+Listagem de zonas
+Listagem de missões
+Aceitação de missões
+Consulta das missões do usuário
+Listagem de tesouros
+Coleta de tesouros
+Projeto STOG
 
-### Requisição
+O STOG (Sistema de Turismo Online e Gamificado) é uma plataforma de turismo gamificado baseada em exploração geográfica, coleta de tesouros virtuais, missões e recompensas digitais.
 
-```http
-GET /zones
-```
-
-### Autenticação
-
-Não necessária.
-
-### Resposta
-
-```json
-[
-    {
-        "zone_id": 1,
-        "name": "Recife Antigo",
-        "description": "Área histórica da cidade"
-    }
-]
-```
-
----
-
-# Missões
-
-Missões são desafios que podem ser aceitos pelos usuários.
-
-## Listar Todas as Missões
-
-### Requisição
-
-```http
-GET /quests
-```
-
-### Autenticação
-
-Não necessária.
-
-### Resposta
-
-```json
-[
-    {
-        "quest_id": 1,
-        "name": "Visite o Marco Zero"
-    }
-]
-```
-
----
-
-## Aceitar Missão
-
-Associa uma missão ao usuário autenticado.
-
-### Requisição
-
-```http
-POST /quests/:questId/accept
-```
-
-### Exemplo
-
-```http
-POST /quests/2/accept
-```
-
-### Cabeçalhos
-
-```http
-Authorization: Bearer JWT_TOKEN
-```
-
-### Resposta
-
-```json
-{
-    "message": "Missão aceita com sucesso"
-}
-```
-
----
-
-## Listar Minhas Missões
-
-Retorna todas as missões aceitas pelo usuário autenticado.
-
-### Requisição
-
-```http
-GET /quests/my-quests
-```
-
-### Cabeçalhos
-
-```http
-Authorization: Bearer JWT_TOKEN
-```
-
-### Resposta
-
-```json
-[
-    {
-        "quest_id": 2,
-        "name": "Explorar Recife Antigo",
-        "completed": false
-    }
-]
-```
-
----
-
-# Tesouros
-
-Tesouros são itens virtuais colecionáveis associados às zonas.
-
-## Listar Todos os Tesouros
-
-### Requisição
-
-```http
-GET /treasures
-```
-
-### Cabeçalhos
-
-```http
-Authorization: Bearer JWT_TOKEN
-```
-
-### Resposta
-
-```json
-[
-    {
-        "treasure_id": 1,
-        "name": "Bússola Dourada",
-        "description": "Artefato de um antigo explorador"
-    }
-]
-```
-
----
-
-## Coletar Tesouro
-
-Registra um tesouro como coletado pelo usuário autenticado.
-
-### Requisição
-
-```http
-POST /treasures/:treasureId/collect
-```
-
-### Exemplo
-
-```http
-POST /treasures/2/collect
-```
-
-### Cabeçalhos
-
-```http
-Authorization: Bearer JWT_TOKEN
-```
-
-### Resposta
-
-```json
-{
-    "message": "Tesouro coletado com sucesso"
-}
-```
-
----
-
-# Estrutura do Banco de Dados
-
-Principais entidades:
-
-* users
-* zones
-* quests
-* treasures
-* user_quest
-* user_treasure
-* rewards
-* user_reward
-* partners
-
-Relacionamentos:
-
-* Uma zona pode possuir várias missões.
-* Uma zona pode possuir vários tesouros.
-* Um usuário pode aceitar várias missões.
-* Um usuário pode coletar vários tesouros.
-* Uma missão pode gerar recompensas.
-* Recompensas podem ser atribuídas a usuários.
-
----
-
-# Objetivo do MVP
-
-A versão atual do sistema contempla:
-
-* Cadastro de usuários
-* Login com JWT
-* Listagem de zonas
-* Listagem de missões
-* Aceitação de missões
-* Consulta das missões do usuário
-* Listagem de tesouros
-* Coleta de tesouros
-
----
-
-# Funcionalidades Futuras
-
-Funcionalidades previstas para versões posteriores:
-
-* Geolocalização em tempo real
-* Geofencing
-* Sistema de Lore (história principal)
-* Sistema de recompensas
-* Integração com parceiros comerciais
-* Ranking de usuários
-* Marketplace interno
-* Proteção contra Fake GPS
-* Funcionamento offline
-
----
-
-# Testes
-
-O projeto possui uma coleção Postman contendo:
-
-* Cadastro de usuário
-* Login
-* Listagem de zonas
-* Listagem de missões
-* Aceitação de missões
-* Consulta das missões do usuário
-* Listagem de tesouros
-* Coleta de tesouros
-
-Antes de executar os testes, certifique-se de que a API esteja rodando em:
-
-```http
-http://localhost:3000
-```
+O objetivo do MVP é validar o núcleo da aplicação através da integração entre autenticação, missões, tesouros e zonas de exploração.
