@@ -34,6 +34,12 @@ export default function Navbar() {
 
             {" | "}
 
+            <Link to="/map">
+                Mapa
+            </Link>
+
+            {" | "}
+
             <button onClick={handleLogout}>
                 Logout
             </button>
