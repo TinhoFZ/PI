@@ -224,6 +224,11 @@ VALUES
     JSON_ARRAY(-8.0615, -34.9590)
 );
 
+ALTER TABLE users
+ADD COLUMN xp INT DEFAULT 0,
+ADD COLUMN level INT DEFAULT 1,
+ADD COLUMN coins INT DEFAULT 0;
+
 ALTER TABLE quests
 ADD COLUMN xp_reward INT DEFAULT 100;
 
@@ -233,3 +238,7 @@ ADD COLUMN xp_reward INT DEFAULT 50;
 ALTER TABLE user_quest
 ADD CONSTRAINT unique_user_quest
 UNIQUE(user_id, quest_id);
+
+SELECT * FROM users;
+SELECT * FROM logs;
+SELECT * FROM error_logs;
