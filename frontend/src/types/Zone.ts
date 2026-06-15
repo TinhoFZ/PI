@@ -1,5 +1,6 @@
 export interface Zone {
-    id: number;
+    zone_id: number;
     name: string;
     description: string;
+    geometry: [number, number][];
 }

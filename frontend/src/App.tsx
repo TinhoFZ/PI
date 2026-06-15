@@ -10,6 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import Zones from "./pages/Zones";
 import Treasures from "./pages/Treasures";
 import Quests from "./pages/Quests";
+import Map from "./pages/Map";
 
 function App() {
   
@@ -44,6 +45,10 @@ function App() {
             <Route
                 path="/quests"
                 element={<Quests />}
+            />
+            <Route
+                path="/map"
+                element={<Map />}
             />
         </Routes>
     </BrowserRouter>

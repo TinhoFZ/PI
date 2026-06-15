@@ -13,9 +13,17 @@ async function getAllTreasures(req, res) {
             FROM treasures
         `);
 
-        res.json(treasures);
+        const formatted = treasures.map(t => ({
+            ...t,
+            coordinate: typeof t.coordinate === "string"
+                ? JSON.parse(t.coordinate)
+                : t.coordinate
+        }));
+
+        res.json(formatted);
 
     } catch (error) {
+        console.error(error);
         res.status(500).json({
             message: "Erro ao buscar tesouros"
         });
