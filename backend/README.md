@@ -61,7 +61,7 @@ Get Current User
 
 Retorna os dados do usuário autenticado.
 
-GET {{baseUrl}}/auth/me
+GET {{baseUrl}}/me
 Zones
 Get All Zones
 
