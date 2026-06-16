@@ -1,0 +1,102 @@
+.stog-popup {
+    width: 240px;
+    border-radius: 16px;
+    padding: 12px;
+
+    color: white;
+
+    background: linear-gradient(
+        145deg,
+        rgba(20, 20, 35, 0.95),
+        rgba(10, 10, 18, 0.95)
+    );
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    backdrop-filter: blur(14px);
+
+    font-family: system-ui;
+}
+
+/* HEADER */
+.stog-popup-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.stog-title-area h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.stog-title-area span {
+    display: inline-block;
+    margin-top: 4px;
+
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 999px;
+
+    background: rgba(124, 58, 237, 0.25);
+    color: #c4b5fd;
+}
+
+/* BODY */
+.stog-popup-body {
+    margin-top: 8px;
+}
+
+.stog-popup-body p {
+    margin: 0;
+    font-size: 12px;
+    opacity: 0.85;
+    line-height: 1.4;
+}
+
+/* ACTION */
+.stog-popup-actions {
+    margin-top: 12px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.stog-popup-actions button {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border: none;
+
+    padding: 6px 10px;
+    border-radius: 10px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+/* VARIANTS (IMPORTANTE pro teu projeto STOG) */
+.stog-zone {
+    border-left: 3px solid #a855f7;
+}
+
+.stog-location {
+    border-left: 3px solid #22c55e;
+}
+
+.leaflet-popup-content-wrapper {
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.leaflet-popup-content {
+    margin: 0 !important;
+}
+
+.leaflet-popup-tip {
+    background: rgba(20, 20, 35, 0.95) !important;
+}
