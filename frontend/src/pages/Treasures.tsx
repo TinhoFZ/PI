@@ -35,7 +35,7 @@ export default function Treasures() {
                 (treasure) => (
                     <div
                         key={
-                            treasure.id
+                            treasure.treasure_id
                         }
                     >
                         <h3>
