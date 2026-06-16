@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
 
-import {
-    MapContainer,
-    TileLayer,
-    Marker,
-    Popup,
-    Polygon,
-} from "react-leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 
 import { getZones } from "../services/zoneService";
 import { getLocations } from "../services/locationService";
 
 import type { Zone } from "../types/Zone";
-import type { Location } from "../types/Location";
+import type { Location } from "../types/location";
+
+import ZonesLayer from "../Map/ZonesLayer";
+import LocationsLayer from "../Map/LocationsLayer";
 
 export default function Map() {
     const [zones, setZones] = useState<Zone[]>([]);
@@ -49,10 +46,7 @@ export default function Map() {
 
                         if (!valid) return null;
 
-                        return {
-                            ...zone,
-                            geometry: geom,
-                        };
+                        return { ...zone, geometry: geom };
                     })
                     .filter(Boolean);
 
@@ -71,10 +65,7 @@ export default function Map() {
                             return null;
                         }
 
-                        return {
-                            ...loc,
-                            coordinate: coord,
-                        };
+                        return { ...loc, coordinate: coord };
                     })
                     .filter(Boolean);
 
@@ -94,9 +85,7 @@ export default function Map() {
         };
     }, []);
 
-    if (loading) {
-        return <div>Loading map...</div>;
-    }
+    if (loading) return <div>Loading map...</div>;
 
     return (
         <MapContainer
@@ -109,34 +98,8 @@ export default function Map() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
-            {/* ZONES */}
-            {zones.map((zone) => (
-                <Polygon
-                    key={zone.zone_id}
-                    positions={zone.geometry}
-                >
-                    <Popup>
-                        <h3>{zone.name}</h3>
-                        <p>{zone.description}</p>
-                    </Popup>
-                </Polygon>
-            ))}
-
-            {/* LOCATIONS (MARKERS) */}
-            {locations.map((loc) => (
-                <Marker
-                    key={loc.location_id}
-                    position={
-                        [loc.coordinate[0], loc.coordinate[1]] as [number, number]
-                    }
-                >
-                    <Popup>
-                        <h3>{loc.name}</h3>
-                        <p>{loc.description}</p>
-                        {loc.type && <small>Type: {loc.type}</small>}
-                    </Popup>
-                </Marker>
-            ))}
+            <ZonesLayer zones={zones} />
+            <LocationsLayer locations={locations} />
         </MapContainer>
     );
 }
