@@ -6,15 +6,22 @@ import { getZones } from "../services/zoneService";
 import { getLocations } from "../services/locationService";
 
 import type { Zone } from "../types/Zone";
-import type { Location } from "../types/location";
+import type { Location } from "../types/Location";
 
 import ZonesLayer from "../Map/ZonesLayer";
 import LocationsLayer from "../Map/LocationsLayer";
+
+import ZonePanel from "../Map/ZonePanel";
+
+import "../assets/map-popup.css";
+import "../assets/panel-popup.css";
 
 export default function Map() {
     const [zones, setZones] = useState<Zone[]>([]);
     const [locations, setLocations] = useState<Location[]>([]);
     const [loading, setLoading] = useState(true);
+
+    const [selectedZone, setSelectedZone] = useState<Zone | null>(null);
 
     useEffect(() => {
         let mounted = true;
@@ -88,18 +95,35 @@ export default function Map() {
     if (loading) return <div>Loading map...</div>;
 
     return (
-        <MapContainer
-            center={[-8.0476, -34.877] as [number, number]}
-            zoom={13}
-            style={{ width: "100%", height: "100vh" }}
-        >
-            <TileLayer
-                attribution="&copy; OpenStreetMap contributors"
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
+        <>
+            <MapContainer
+                center={[-8.0476, -34.877] as [number, number]}
+                zoom={13}
+                style={{ width: "100%", height: "100vh" }}
+            >
+                <TileLayer
+                    url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"
+                    attribution="&copy; OpenStreetMap &copy; CartoDB"
+                />
 
-            <ZonesLayer zones={zones} />
-            <LocationsLayer locations={locations} />
-        </MapContainer>
+                <ZonesLayer
+                    zones={zones}
+                    onSelectZone={setSelectedZone}
+                />
+
+                <LocationsLayer
+                    onSelectLocation={(loc) => {
+                        const zone = zones.find((z) => z.zone_id === loc.zone_id);
+                        if (zone) setSelectedZone(zone);
+                    }}
+                    locations={locations}
+                />
+            </MapContainer>
+
+            <ZonePanel
+                zone={selectedZone}
+                onClose={() => setSelectedZone(null)}
+            />
+        </>
     );
 }
