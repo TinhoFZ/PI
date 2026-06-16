@@ -9,30 +9,34 @@ import {
 } from "react-leaflet";
 
 import { getZones } from "../services/zoneService";
-import { getTreasures } from "../services/treasureService";
+import { getLocations } from "../services/locationService";
+
+import type { Zone } from "../types/Zone";
+import type { Location } from "../types/Location";
 
 export default function Map() {
-    const [zones, setZones] = useState<any[]>([]);
-    const [treasures, setTreasures] = useState<any[]>([]);
+    const [zones, setZones] = useState<Zone[]>([]);
+    const [locations, setLocations] = useState<Location[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        let mounted = true;
+
         async function load() {
             try {
-                const z = await getZones();
-                const t = await getTreasures();
+                const [z, l] = await Promise.all([
+                    getZones(),
+                    getLocations(),
+                ]);
 
-                // 🔥 NORMALIZA ZONES
-                const safeZones = z
+                if (!mounted) return;
+
+                const parsedZones: Zone[] = (z || [])
                     .map((zone: any) => {
-                        let geom = zone.geometry;
-
-                        if (typeof geom === "string") {
-                            try {
-                                geom = JSON.parse(geom);
-                            } catch {
-                                return null;
-                            }
-                        }
+                        const geom =
+                            typeof zone.geometry === "string"
+                                ? JSON.parse(zone.geometry)
+                                : zone.geometry;
 
                         if (!Array.isArray(geom)) return null;
 
@@ -52,18 +56,12 @@ export default function Map() {
                     })
                     .filter(Boolean);
 
-                // 🔥 NORMALIZA TREASURES
-                const safeTreasures = t
-                    .map((treasure: any) => {
-                        let coord = treasure.coordinate;
-
-                        if (typeof coord === "string") {
-                            try {
-                                coord = JSON.parse(coord);
-                            } catch {
-                                return null;
-                            }
-                        }
+                const parsedLocations: Location[] = (l || [])
+                    .map((loc: any) => {
+                        const coord =
+                            typeof loc.coordinate === "string"
+                                ? JSON.parse(loc.coordinate)
+                                : loc.coordinate;
 
                         if (
                             !Array.isArray(coord) ||
@@ -74,25 +72,32 @@ export default function Map() {
                         }
 
                         return {
-                            ...treasure,
+                            ...loc,
                             coordinate: coord,
                         };
                     })
                     .filter(Boolean);
 
-                setZones(safeZones);
-                setTreasures(safeTreasures);
+                setZones(parsedZones);
+                setLocations(parsedLocations);
             } catch (err) {
                 console.error(err);
+            } finally {
+                if (mounted) setLoading(false);
             }
         }
 
         load();
+
+        return () => {
+            mounted = false;
+        };
     }, []);
 
-    console.log(zones);
-    console.log(treasures);
-    
+    if (loading) {
+        return <div>Loading map...</div>;
+    }
+
     return (
         <MapContainer
             center={[-8.0476, -34.877] as [number, number]}
@@ -104,6 +109,7 @@ export default function Map() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
+            {/* ZONES */}
             {zones.map((zone) => (
                 <Polygon
                     key={zone.zone_id}
@@ -116,17 +122,18 @@ export default function Map() {
                 </Polygon>
             ))}
 
-            {treasures.map((treasure) => (
+            {/* LOCATIONS (MARKERS) */}
+            {locations.map((loc) => (
                 <Marker
-                    key={treasure.treasure_id}
-                    position={[
-                        treasure.coordinate[0],
-                        treasure.coordinate[1],
-                    ]}
+                    key={loc.location_id}
+                    position={
+                        [loc.coordinate[0], loc.coordinate[1]] as [number, number]
+                    }
                 >
                     <Popup>
-                        <h3>{treasure.name}</h3>
-                        <p>{treasure.description}</p>
+                        <h3>{loc.name}</h3>
+                        <p>{loc.description}</p>
+                        {loc.type && <small>Type: {loc.type}</small>}
                     </Popup>
                 </Marker>
             ))}

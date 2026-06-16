@@ -1,3 +1,5 @@
+DROP DATABASE pidb;
+
 CREATE DATABASE pidb;
 
 USE pidb;
@@ -21,6 +23,19 @@ CREATE TABLE partners (
     partner_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     description TEXT
+);
+
+CREATE TABLE locations (
+    location_id INT AUTO_INCREMENT PRIMARY KEY,
+    zone_id INT NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    coordinate JSON NOT NULL,
+    type ENUM('treasure', 'quest', 'npc', 'poi') DEFAULT 'poi',
+
+    FOREIGN KEY (zone_id)
+        REFERENCES zones(zone_id)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE treasures (
@@ -239,6 +254,122 @@ ALTER TABLE user_quest
 ADD CONSTRAINT unique_user_quest
 UNIQUE(user_id, quest_id);
 
+DELETE FROM zones;
+
+INSERT INTO zones (name, description, geometry)
+VALUES
+(
+    'Marco Zero',
+    'Centro histórico do Recife',
+    JSON_ARRAY(
+        JSON_ARRAY(-8.0645, -34.8735),
+        JSON_ARRAY(-8.0640, -34.8685),
+        JSON_ARRAY(-8.0605, -34.8688),
+        JSON_ARRAY(-8.0610, -34.8740)
+    )
+),
+(
+    'Instituto Ricardo Brennand',
+    'Museu e castelo',
+    JSON_ARRAY(
+        JSON_ARRAY(-8.0660, -34.9625),
+        JSON_ARRAY(-8.0660, -34.9545),
+        JSON_ARRAY(-8.0580, -34.9545),
+        JSON_ARRAY(-8.0580, -34.9625)
+    )
+),
+(
+    'Parque da Jaqueira',
+    'Área de lazer e caminhada',
+    JSON_ARRAY(
+        JSON_ARRAY(-8.0375, -34.9135),
+        JSON_ARRAY(-8.0375, -34.9075),
+        JSON_ARRAY(-8.0325, -34.9075),
+        JSON_ARRAY(-8.0325, -34.9135)
+    )
+);
+
+SET FOREIGN_KEY_CHECKS = 0;
+INSERT INTO locations (zone_id, name, description, coordinate, type)
+VALUES
+
+-- =======================
+-- MARCO ZERO
+-- =======================
+(
+    1,
+    'Estátua do Marco Zero',
+    'Ponto central histórico do Recife.',
+    JSON_ARRAY(-8.0633, -34.8711),
+    'poi'
+),
+(
+    1,
+    'Cais do Porto Antigo',
+    'Área turística com vista para o rio.',
+    JSON_ARRAY(-8.0628, -34.8700),
+    'poi'
+),
+(
+    1,
+    'Placa de Fundacao',
+    'Marco histórico da cidade.',
+    JSON_ARRAY(-8.0622, -34.8720),
+    'quest'
+),
+
+-- =======================
+-- RICARDO BRENNAND
+-- =======================
+(
+    2,
+    'Entrada do Castelo',
+    'Portão principal do instituto.',
+    JSON_ARRAY(-8.0615, -34.9588),
+    'poi'
+),
+(
+    2,
+    'Jardim das Esculturas',
+    'Área externa com obras de arte.',
+    JSON_ARRAY(-8.0605, -34.9598),
+    'poi'
+),
+(
+    2,
+    'Sala das Armaduras',
+    'Exposição medieval interna.',
+    JSON_ARRAY(-8.0595, -34.9605),
+    'treasure'
+),
+
+-- =======================
+-- JAQUEIRA
+-- =======================
+(
+    3,
+    'Entrada Principal do Parque',
+    'Acesso principal ao parque.',
+    JSON_ARRAY(-8.0348, -34.9108),
+    'poi'
+),
+(
+    3,
+    'Pista de Caminhada',
+    'Área para exercícios e corrida.',
+    JSON_ARRAY(-8.0352, -34.9092),
+    'poi'
+),
+(
+    3,
+    'Playground Central',
+    'Área recreativa infantil.',
+    JSON_ARRAY(-8.0340, -34.9110),
+    'poi'
+);
+
 SELECT * FROM users;
 SELECT * FROM logs;
 SELECT * FROM error_logs;
+SELECT * FROM locations;
+SELECT * FROM zones;

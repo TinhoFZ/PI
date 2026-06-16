@@ -16,6 +16,7 @@ const authRoutes = require("./routes/authRoutes");
 const zoneRoutes = require("./routes/zoneRoutes");
 const questRoutes = require("./routes/questRoutes");
 const treasureRoutes = require("./routes/treasureRoutes");
+const locationRoutes = require("./routes/locationRoutes");
 
 app.use("/", userRoutes);
 
@@ -23,6 +24,7 @@ app.use("/auth", authRoutes);
 app.use("/zones", zoneRoutes);
 app.use("/quests", questRoutes);
 app.use("/treasures", treasureRoutes);
+app.use("/locations", locationRoutes);
 
 const errorHandler = require("./middlewares/errorHandler");
 
