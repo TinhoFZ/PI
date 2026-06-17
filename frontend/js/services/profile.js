@@ -43,10 +43,20 @@ async function loadProfile() {
             return;
         }
 
+        let completedQuests = 0;
+
+        data[1].forEach(quest => {
+            if(quest.completed === 1) {
+                completedQuests++;
+            }
+        });
+
         email.innerText = data[0].email;
         name.innerText = data[0].name;
+
         xp.children[0].innerText = data[0].xp;
         level.children[0].innerText = data[0].level;
+        quest.children[0].innerText = completedQuests;
 
     } catch(error) {
         console.error(error);
