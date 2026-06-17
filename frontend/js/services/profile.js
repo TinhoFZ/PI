@@ -32,9 +32,19 @@ async function loadProfile() {
                 }
             )
 
-        const data = [await userResponse.json(), await questResponse.json()];
+        const treasureResponse = 
+            await fetch(
+                `${API_URL}/treasures/my-treasures`,
+                {
+                    headers: {
+                        authorization: `Bearer ${token}`
+                    }
+                }
+            )
 
-        if (!userResponse.ok && questResponse.ok) {
+        const data = [await userResponse.json(), await questResponse.json(), await treasureResponse.json()];
+
+        if (!userResponse.ok && questResponse.ok && treasureResponse.ok) {
 
             alert(
                 data.message || "Erro ao carregar perfil"
@@ -51,12 +61,19 @@ async function loadProfile() {
             }
         });
 
+        let collectedTreasures = 0;
+
+        data[2].forEach(treasure => {
+            collectedTreasures++;
+        })
+
         email.innerText = data[0].email;
         name.innerText = data[0].name;
 
         xp.children[0].innerText = data[0].xp;
         level.children[0].innerText = data[0].level;
         quest.children[0].innerText = completedQuests;
+        treasure.children[0].innerText = collectedTreasures;
 
     } catch(error) {
         console.error(error);
