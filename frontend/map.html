@@ -21,6 +21,11 @@
 
     <div id="map"></div>
 
+    <div id="questPanel">
+        <h2>Quests Ativas</h2>
+        <div id="questList"></div>
+    </div>
+
     <a href="quests.html">
         Minhas Quests
     </a>
@@ -41,10 +46,13 @@
     <script src="js/map/locations.js"></script>
     <script src="js/map/treasures.js"></script>
 
+    <script src="js/ui/questsPanel.js"></script>
+
     <script>
         loadZones();
         loadLocations();
         loadTreasures();
+        loadQuestPanel();
     </script>
 
 </body>
