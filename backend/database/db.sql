@@ -116,11 +116,11 @@ CREATE TABLE error_logs (
 
 INSERT INTO users (name, email, password, xp, level, coins)
 VALUES
-('Eduardo', 'edu@stog.com', '123456', 500, 3, 200),
-('Bruno', 'bruno@stog.com', '123456', 1200, 5, 500),
-('Ligia', 'ligia@stog.com', '123456', 800, 4, 300),
-('Matheus', 'matheus@stog.com', '123456', 100, 1, 50),
-('Diogenes', 'diogenes@stog.com', '123456', 600, 3, 180);
+('Eduardo', 'edu@stog.com', '$2b$10$dMLANWbZoerQHHvNFWL9buRn4b6dMU/AcA0XXkzyTB3sFIwEdG5uO', 500, 3, 200),
+('Bruno', 'bruno@stog.com', '$2b$10$dMLANWbZoerQHHvNFWL9buRn4b6dMU/AcA0XXkzyTB3sFIwEdG5uO', 1200, 5, 500),
+('Ligia', 'ligia@stog.com', '$2b$10$dMLANWbZoerQHHvNFWL9buRn4b6dMU/AcA0XXkzyTB3sFIwEdG5uO', 800, 4, 300),
+('Matheus', 'matheus@stog.com', '$2b$10$dMLANWbZoerQHHvNFWL9buRn4b6dMU/AcA0XXkzyTB3sFIwEdG5uO', 100, 1, 50),
+('Diogenes', 'diogenes@stog.com', '$2b$10$dMLANWbZoerQHHvNFWL9buRn4b6dMU/AcA0XXkzyTB3sFIwEdG5uO', 600, 3, 180);
 
 INSERT INTO partners (name, description)
 VALUES

@@ -6,6 +6,16 @@ const level = document.querySelector('#level-text');
 const quest = document.querySelector('#quest-text');
 const treasure = document.querySelector('#treasure-text');
 
+const xpCard = {
+    xpLabel: document.querySelector('.xp-label'),
+    xpValue: document.querySelector('.xp-value'),
+    progressFill: document.querySelector('.progress-fill'),
+    xpNextHint: document.querySelector('.xp-next-hint'),
+    progressFooter: document.querySelector('.progress-footer')
+}
+
+const maxXp = 1000;
+
 async function loadProfile() {
 
     try {
@@ -74,6 +84,13 @@ async function loadProfile() {
         level.children[0].innerText = data[0].level;
         quest.children[0].innerText = completedQuests;
         treasure.children[0].innerText = collectedTreasures;
+
+        xpCard.xpLabel.innerText = `Progresso para o Nível ${data[0].level + 1}`;
+        xpCard.xpValue.innerText = `${data[0].xp}/${maxXp}`
+        xpCard.xpNextHint.innerText = `✦ Faltam ${maxXp - data[0].xp} XP para subir de nível. Continue explorando!`;
+        xpCard.progressFooter.children[0].innerText = `Nível ${data[0].level}`;
+        xpCard.progressFooter.children[1].innerText = `${(data[0].xp / maxXp) * 100}% concluído`
+        xpCard.progressFooter.children[2].innerText = `Nível ${data[0].level + 1}`;
 
     } catch(error) {
         console.error(error);
