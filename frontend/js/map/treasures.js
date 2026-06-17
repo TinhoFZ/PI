@@ -12,7 +12,10 @@ async function loadTreasures() {
         treasures.forEach(treasure => {
 
             const marker = L.marker(
-                treasure.coordinate
+                treasure.coordinate,
+                {
+                    icon: treasureIcon
+                }
             ).addTo(map);
 
             marker.bindPopup(`

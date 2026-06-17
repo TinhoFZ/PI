@@ -261,10 +261,6 @@ window.acceptQuest = async function(questId) {
     }
 };
 
-loadZones();
-loadLocations();
-loadTreasures();
-
 window.acceptQuest = async function(questId) {
 
     try {

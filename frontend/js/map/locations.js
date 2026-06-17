@@ -16,8 +16,15 @@ async function loadLocations() {
             )
             .forEach(location => {
 
+                let icon = defaultIcon;
+
+                if (location.type === "quest") {
+                    icon = questIcon;
+                }
+
                 const marker = L.marker(
-                    location.coordinate
+                    location.coordinate,
+                    { icon }
                 ).addTo(map);
 
                 if (
