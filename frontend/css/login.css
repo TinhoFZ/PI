@@ -1,0 +1,237 @@
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    font-family:'Saira',sans-serif;
+    background:#ffffff;
+}
+
+.page{
+    min-height:100vh;
+    display:flex;
+}
+
+/* =======================
+   PAINEL ESQUERDO
+======================= */
+
+.left-panel{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+
+    background:linear-gradient(
+        180deg,
+        #55A86E 0%,
+        #529776 50%,
+        #496B8B 100%
+    );
+}
+
+.left-content{
+    text-align:center;
+    color:white;
+    z-index:2;
+    padding:2rem;
+}
+
+.left-content h1{
+    font-size:clamp(2.5rem,5vw,4rem);
+    font-weight:700;
+    margin-bottom:2rem;
+}
+
+.hero-circle{
+    width:min(400px,80vw);
+    height:min(400px,80vw);
+
+    border-radius:50%;
+    background:#d9d9d9;
+    margin:auto;
+}
+
+/* =======================
+   PAINEL DIREITO
+======================= */
+
+.right-panel{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:3rem;
+}
+
+.login-container{
+    width:100%;
+    max-width:520px;
+}
+
+.login-title{
+    font-size:clamp(2rem,4vw,3.75rem);
+    margin-bottom:2rem;
+}
+
+.form-group{
+    margin-bottom:1.25rem;
+}
+
+.form-input{
+    width:100%;
+    height:66px;
+
+    border:none;
+    border-radius:10px;
+
+    background:#E3E3E3;
+
+    padding:0 1.5rem;
+
+    font-size:1.1rem;
+    font-family:'Saira',sans-serif;
+}
+
+.divider{
+    display:flex;
+    align-items:center;
+    gap:1rem;
+
+    margin:2rem 0;
+}
+
+.divider::before,
+.divider::after{
+    content:"";
+    flex:1;
+    height:3px;
+    background:#949494;
+}
+
+.divider span{
+    font-size:2rem;
+}
+
+.social-button{
+    width:100%;
+    min-height:66px;
+
+    display:flex;
+    align-items:center;
+    gap:1rem;
+
+    background:white;
+
+    border:2px solid #7F7F7F;
+    border-radius:40px;
+
+    padding:0 1.5rem;
+
+    cursor:pointer;
+
+    margin-bottom:1rem;
+}
+
+.social-icon{
+    width:40px;
+    height:40px;
+
+    border-radius:50%;
+    background:#d9d9d9;
+
+    flex-shrink:0;
+}
+
+.social-text{
+    font-size:1.3rem;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+}
+
+.register-link{
+    margin:1.5rem 0;
+    font-size:1.2rem;
+    color:#454545;
+}
+
+.register-link a{
+    color:#4D00FF;
+    text-decoration:none;
+}
+
+.login-button{
+    width:212px;
+    height:52px;
+
+    border:none;
+    border-radius:10px;
+
+    background:#1E89EA;
+
+    color:white;
+    font-size:1.5rem;
+
+    font-family:'Alata',sans-serif;
+
+    cursor:pointer;
+
+    box-shadow:0 6px 4px #174A78;
+}
+
+/* =======================
+   RESPONSIVO
+======================= */
+
+@media (max-width:1024px){
+
+    .page{
+        flex-direction:column;
+    }
+
+    .left-panel{
+        min-height:40vh;
+    }
+
+    .hero-circle{
+        width:250px;
+        height:250px;
+    }
+
+    .right-panel{
+        padding:2rem;
+    }
+
+    .login-container{
+        max-width:100%;
+    }
+
+    .login-button{
+        width:100%;
+    }
+}
+
+@media (max-width:768px){
+
+    .social-text{
+        font-size:1rem;
+    }
+
+    .form-input{
+        height:60px;
+    }
+
+    .social-button{
+        min-height:60px;
+    }
+
+    .divider span{
+        font-size:1.5rem;
+    }
+}

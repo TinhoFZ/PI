@@ -2,37 +2,99 @@
 <html>
 <head>
     <title>Login</title>
+
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
 
-    <h1>Login</h1>
+ <div class="page">
 
-    <form id="loginForm">
+    <section class="left-panel">
 
-        <input
-            type="email"
-            id="email"
-            placeholder="Email"
-            required
-        >
+        <div class="left-content">
 
-        <input
-            type="password"
-            id="password"
-            placeholder="Senha"
-            required
-        >
+            <h1>
+                Seja Bem-Vindo
+            </h1>
 
-        <button type="submit">
-            Entrar
-        </button>
+            <div class="hero-circle"></div>
 
-    </form>
+        </div>
 
-    <p>
-        Não possui conta?
-        <a href="register.html">Cadastrar</a>
-    </p>
+    </section>
+
+    <section class="right-panel">
+
+        <div class="login-container">
+
+            <h2 class="login-title">
+                Entrar com login
+            </h2>
+
+            <form id="loginForm">
+
+                <div class="form-group">
+                    <input
+                        class="form-input"
+                        type="email"
+                        id="email"
+                        placeholder="Email"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <input
+                        class="form-input"
+                        type="password"
+                        id="password"
+                        placeholder="Senha"
+                        required
+                    >
+                </div>
+
+                <div class="divider">
+                    <span>ou</span>
+                </div>
+
+                <button type="button" class="social-button">
+
+                    <div class="social-icon"></div>
+
+                    <span class="social-text">
+                        Continuar com o Google
+                    </span>
+
+                </button>
+
+                <button type="button" class="social-button">
+
+                    <div class="social-icon"></div>
+
+                    <span class="social-text">
+                        Continuar com Apple
+                    </span>
+
+                </button>
+
+                <div class="register-link">
+                    Não tem uma conta?
+                    <a href="#">
+                        Cadastre-se agora
+                    </a>
+                </div>
+
+                <button class="login-button" type="submit">
+                    Logar
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+</div>
 
     <script src="js/login.js"></script>
 
