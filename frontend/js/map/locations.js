@@ -2,12 +2,40 @@ async function loadLocations() {
 
     try {
 
-        const response = await fetch(
-            `${API_URL}/locations`
-        );
+        const token =
+            localStorage.getItem("token");
+
+        const [
+            locationsResponse,
+            myQuestsResponse
+        ] = await Promise.all([
+            fetch(`${API_URL}/locations`),
+            fetch(
+                `${API_URL}/quests/my-quests`,
+                {
+                    headers: {
+                        Authorization:
+                            `Bearer ${token}`
+                    }
+                }
+            )
+        ]);
 
         const locations =
-            await response.json();
+            await locationsResponse.json();
+
+        const myQuests =
+            await myQuestsResponse.json();
+            
+        const completedQuestIds =
+            myQuests
+            
+                .filter(
+                    quest => quest.completed
+                )
+                .map(
+                    quest => quest.quest_id
+                );
 
         locations
             .filter(
@@ -15,6 +43,15 @@ async function loadLocations() {
                     location.type !== "treasure"
             )
             .forEach(location => {
+
+                if (
+                    location.type === "quest" &&
+                    completedQuestIds.includes(
+                        location.quest_id
+                    )
+                ) {
+                    return;
+                }
 
                 let icon = defaultIcon;
 

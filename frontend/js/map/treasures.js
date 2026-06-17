@@ -1,15 +1,41 @@
 async function loadTreasures() {
 
-    try {
+    const token =
+        localStorage.getItem("token");
 
-        const response = await fetch(
-            `${API_URL}/treasures`
+    const [treasuresResponse, myTreasuresResponse] =
+        await Promise.all([
+            fetch(`${API_URL}/treasures`),
+            fetch(
+                `${API_URL}/treasures/my-treasures`,
+                {
+                    headers: {
+                        Authorization:
+                            `Bearer ${token}`
+                    }
+                }
+            )
+        ]);
+
+    const treasures =
+        await treasuresResponse.json();
+
+    const myTreasures =
+        await myTreasuresResponse.json();
+
+    const collectedIds =
+        myTreasures.map(
+            treasure => treasure.treasure_id
         );
 
-        const treasures =
-            await response.json();
-
-        treasures.forEach(treasure => {
+    treasures
+        .filter(
+            treasure =>
+                !collectedIds.includes(
+                    treasure.treasure_id
+                )
+        )
+        .forEach(treasure => {
 
             const marker = L.marker(
                 treasure.coordinate,
@@ -23,7 +49,11 @@ async function loadTreasures() {
                 <p>${treasure.description}</p>
 
                 <button
-                    onclick="collectTreasure(${treasure.treasure_id})"
+                    onclick="
+                        collectTreasure(
+                            ${treasure.treasure_id}
+                        )
+                    "
                 >
                     Coletar
                 </button>
@@ -34,13 +64,4 @@ async function loadTreasures() {
             ] = marker;
 
         });
-
-    } catch (error) {
-
-        console.error(
-            "Erro ao carregar tesouros:",
-            error
-        );
-
-    }
 }

@@ -80,10 +80,7 @@ async function getMyQuests(req, res) {
         );
 
         if (quests.length === 0) {
-            return res.status(404).json({
-                success: false,
-                message: "Quest não encontrada"
-            });
+            return res.json([]);
         }
 
         res.json(quests);

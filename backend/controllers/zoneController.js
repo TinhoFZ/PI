@@ -19,8 +19,6 @@ async function getZones(req, res) {
                 z.geometry
         `);
 
-        console.log(zones);
-
         const formatted = zones.map(zone => ({
             zone_id: zone.zone_id,
             name: zone.name,
