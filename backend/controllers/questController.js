@@ -79,6 +79,13 @@ async function getMyQuests(req, res) {
             [userId]
         );
 
+        if (quests.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "Quest não encontrada"
+            });
+        }
+
         res.json(quests);
 
     } catch (error) {
@@ -94,6 +101,30 @@ async function completeQuest(req, res) {
         
         const userId = req.user.userId;
         const questId = req.params.questId;
+
+        const [userQuest] = await db.query(
+            `
+            SELECT completed
+            FROM user_quest
+            WHERE user_id = ?
+            AND quest_id = ?
+            `,
+            [userId, questId]
+        );
+
+        if (userQuest.length === 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Quest não aceita"
+            });
+        }
+
+        if (userQuest[0].completed) {
+            return res.status(400).json({
+                success: false,
+                message: "Quest já concluída"
+            });
+        }
 
         const [quests] = await db.query(
             `

@@ -7,6 +7,7 @@ async function getAllLocations(req, res) {
             SELECT
                 location_id,
                 zone_id,
+                quest_id,
                 name,
                 description,
                 coordinate,
@@ -70,16 +71,24 @@ async function getLocationsByZone(req, res) {
 
 async function createLocation(req, res) {
     try {
-        const { zone_id, name, description, coordinate, type } = req.body;
+        const {
+            zone_id,
+            quest_id,
+            name,
+            description,
+            coordinate,
+            type
+        } = req.body;
 
         const userId = req.user?.userId || null;
 
         await db.query(`
             INSERT INTO locations
-            (zone_id, name, description, coordinate, type)
-            VALUES (?, ?, ?, ?, ?)
+            (zone_id, quest_id, name, description, coordinate, type)
+            VALUES (?, ?, ?, ?, ?, ?)
         `, [
             zone_id,
+            quest_id,
             name,
             description,
             JSON.stringify(coordinate),

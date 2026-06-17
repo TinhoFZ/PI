@@ -86,22 +86,42 @@ async function loadLocations() {
             )
             .forEach(location => {
 
-                L.marker(
+                const marker = L.marker(
                     location.coordinate
-                )
-                .addTo(map)
-                .bindPopup(`
-                    <h3>${location.name}</h3>
-                    <p>${location.description}</p>
-                    <p>Tipo: ${location.type}</p>
-                `);
+                ).addTo(map);
+
+                if (
+                    location.type === "quest" &&
+                    location.quest_id
+                ) {
+
+                    marker.bindPopup(`
+                        <h3>${location.name}</h3>
+                        <p>${location.description}</p>
+
+                        <button
+                            onclick="acceptQuest(${location.quest_id})"
+                        >
+                            Aceitar Quest
+                        </button>
+                    `);
+
+                } else {
+
+                    marker.bindPopup(`
+                        <h3>${location.name}</h3>
+                        <p>${location.description}</p>
+                        <p>Tipo: ${location.type}</p>
+                    `);
+
+                }
 
             });
 
     } catch (error) {
 
         console.error(
-            "Erro ao carregar locais:",
+            "Erro ao carregar locations:",
             error
         );
 
@@ -209,6 +229,70 @@ window.collectTreasure = async function(treasureId) {
     }
 };
 
+window.acceptQuest = async function(questId) {
+
+    try {
+
+        const token =
+            localStorage.getItem("token");
+
+        const response = await fetch(
+            `${API_URL}/quests/${questId}/accept`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization:
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+        const data =
+            await response.json();
+
+        alert(data.message);
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Erro ao aceitar quest");
+
+    }
+};
+
 loadZones();
 loadLocations();
 loadTreasures();
+
+window.acceptQuest = async function(questId) {
+
+    try {
+
+        const token =
+            localStorage.getItem("token");
+
+        const response = await fetch(
+            `${API_URL}/quests/${questId}/accept`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization:
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+        const data =
+            await response.json();
+
+        alert(data.message);
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Erro ao aceitar quest");
+
+    }
+};
