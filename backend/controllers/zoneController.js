@@ -4,17 +4,28 @@ async function getZones(req, res) {
     try {
         const [zones] = await db.query(`
             SELECT
-                zone_id,
-                name,
-                description,
-                geometry
-            FROM zones
+                z.zone_id,
+                z.name,
+                z.description,
+                z.geometry,
+                COUNT(t.treasure_id) AS treasure_count
+            FROM zones z
+            LEFT JOIN treasures t
+                ON t.zone_id = z.zone_id
+            GROUP BY
+                z.zone_id,
+                z.name,
+                z.description,
+                z.geometry
         `);
+
+        console.log(zones);
 
         const formatted = zones.map(zone => ({
             zone_id: zone.zone_id,
             name: zone.name,
             description: zone.description,
+            treasure_count: Number(zone.treasure_count),
             geometry: typeof zone.geometry === "string"
                 ? JSON.parse(zone.geometry)
                 : zone.geometry

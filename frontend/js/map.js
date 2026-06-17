@@ -5,6 +5,8 @@ const map = L.map("map").setView(
     13
 );
 
+const treasureMarkers = {};
+
 L.tileLayer(
     "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
     {
@@ -35,51 +37,178 @@ navigator.geolocation.getCurrentPosition(
 
 async function loadZones() {
 
-    const response = await fetch(
-        `${API_URL}/zones`
-    );
+    try {
 
-    const zones = await response.json();
+        const response = await fetch(
+            `${API_URL}/zones`
+        );
 
-    zones.forEach(zone => {
+        const zones = await response.json();
 
-        L.polygon(zone.geometry, {
-            color: "purple"
-        })
-        .addTo(map)
-        .bindPopup(zone.name);
+        zones.forEach(zone => {
 
-    });
+            L.polygon(zone.geometry, {
+                color: "purple"
+            })
+            .addTo(map)
+            .bindPopup(`
+                <h3>${zone.name}</h3>
+                <p>${zone.description}</p>
+                <p>Tesouros: ${zone.treasure_count}</p>
+            `);
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao carregar zonas:",
+            error
+        );
+
+    }
+}
+
+async function loadLocations() {
+
+    try {
+
+        const response = await fetch(
+            `${API_URL}/locations`
+        );
+
+        const locations = await response.json();
+
+        locations
+            .filter(
+                location =>
+                    location.type !== "treasure"
+            )
+            .forEach(location => {
+
+                L.marker(
+                    location.coordinate
+                )
+                .addTo(map)
+                .bindPopup(`
+                    <h3>${location.name}</h3>
+                    <p>${location.description}</p>
+                    <p>Tipo: ${location.type}</p>
+                `);
+
+            });
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao carregar locais:",
+            error
+        );
+
+    }
 }
 
 async function loadTreasures() {
 
-    const token =
-        localStorage.getItem("token");
+    try {
 
-    const response = await fetch(
-        `${API_URL}/treasures`,
-        {
-            headers: {
-                Authorization:
-                    `Bearer ${token}`
-            }
-        }
-    );
+        const response = await fetch(
+            `${API_URL}/treasures`
+        );
 
-    const treasures =
-        await response.json();
+        const treasures =
+            await response.json();
 
-    treasures.forEach(treasure => {
+        treasures.forEach(treasure => {
 
-        L.marker(treasure.coordinate)
-            .addTo(map)
-            .bindPopup(
-                treasure.name
-            );
+            const marker = L.marker(
+                treasure.coordinate
+            ).addTo(map);
 
-    });
+            marker.bindPopup(`
+                <h3>${treasure.name}</h3>
+                <p>${treasure.description}</p>
+
+                <button
+                    onclick="collectTreasure(${treasure.treasure_id})"
+                >
+                    Coletar
+                </button>
+            `);
+
+            treasureMarkers[
+                treasure.treasure_id
+            ] = marker;
+
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Erro ao carregar tesouros:",
+            error
+        );
+
+    }
 }
 
+window.collectTreasure = async function(treasureId) {
+
+    try {
+
+        const token =
+            localStorage.getItem("token");
+
+        const response = await fetch(
+            `${API_URL}/treasures/${treasureId}/collect`,
+            {
+                method: "POST",
+                headers: {
+                    Authorization:
+                        `Bearer ${token}`
+                }
+            }
+        );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            alert(
+                data.message ||
+                "Erro ao coletar tesouro"
+            );
+
+            return;
+        }
+
+        alert(data.message);
+
+        const marker =
+            treasureMarkers[treasureId];
+
+        if (marker) {
+
+            map.removeLayer(marker);
+
+            delete treasureMarkers[
+                treasureId
+            ];
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Erro ao coletar tesouro"
+        );
+
+    }
+};
+
 loadZones();
+loadLocations();
 loadTreasures();
