@@ -195,19 +195,19 @@ INSERT INTO quests (
 )
 VALUES
 (
-    1,
+    4,
     NULL,
     'Fotografe o Marco Zero',
     'Tire uma foto do Marco Zero e envie para o mural.'
 ),
 (
-    1,
+    4,
     NULL,
     'Encontre a Placa Histórica',
     'Localize a placa histórica próxima ao monumento.'
 ),
 (
-    2,
+    5,
     NULL,
     'Explore o Castelo',
     'Visite a entrada principal do Instituto Ricardo Brennand.'
@@ -221,19 +221,19 @@ INSERT INTO treasures (
 )
 VALUES
 (
-    1,
+    4,
     'Moeda Colonial',
     'Uma antiga moeda encontrada no Recife Antigo.',
     JSON_ARRAY(-8.0625, -34.8710)
 ),
 (
-    1,
+    4,
     'Mapa Rasgado',
     'Fragmento de um mapa antigo.',
     JSON_ARRAY(-8.0620, -34.8705)
 ),
 (
-    2,
+    5,
     'Espada Cerimonial',
     'Uma espada exposta no castelo.',
     JSON_ARRAY(-8.0615, -34.9590)
@@ -297,21 +297,21 @@ VALUES
 -- MARCO ZERO
 -- =======================
 (
-    1,
+    4,
     'Estátua do Marco Zero',
     'Ponto central histórico do Recife.',
     JSON_ARRAY(-8.0633, -34.8711),
     'poi'
 ),
 (
-    1,
+    4,
     'Cais do Porto Antigo',
     'Área turística com vista para o rio.',
     JSON_ARRAY(-8.0628, -34.8700),
     'poi'
 ),
 (
-    1,
+    4,
     'Placa de Fundacao',
     'Marco histórico da cidade.',
     JSON_ARRAY(-8.0622, -34.8720),
@@ -322,21 +322,21 @@ VALUES
 -- RICARDO BRENNAND
 -- =======================
 (
-    2,
+    5,
     'Entrada do Castelo',
     'Portão principal do instituto.',
     JSON_ARRAY(-8.0615, -34.9588),
     'poi'
 ),
 (
-    2,
+    5,
     'Jardim das Esculturas',
     'Área externa com obras de arte.',
     JSON_ARRAY(-8.0605, -34.9598),
     'poi'
 ),
 (
-    2,
+    5,
     'Sala das Armaduras',
     'Exposição medieval interna.',
     JSON_ARRAY(-8.0595, -34.9605),
@@ -347,29 +347,52 @@ VALUES
 -- JAQUEIRA
 -- =======================
 (
-    3,
+    6,
     'Entrada Principal do Parque',
     'Acesso principal ao parque.',
     JSON_ARRAY(-8.0348, -34.9108),
     'poi'
 ),
 (
-    3,
+    6,
     'Pista de Caminhada',
     'Área para exercícios e corrida.',
     JSON_ARRAY(-8.0352, -34.9092),
     'poi'
 ),
 (
-    3,
+    6,
     'Playground Central',
     'Área recreativa infantil.',
     JSON_ARRAY(-8.0340, -34.9110),
     'poi'
 );
 
+ALTER TABLE locations
+ADD COLUMN quest_id INT NULL;
+
+ALTER TABLE locations
+ADD CONSTRAINT fk_location_quest
+FOREIGN KEY (quest_id)
+REFERENCES quests(quest_id);
+
+UPDATE locations
+SET quest_id = 2
+WHERE name = 'Placa de Fundacao';
+
 SELECT * FROM users;
 SELECT * FROM logs;
 SELECT * FROM error_logs;
 SELECT * FROM locations;
 SELECT * FROM zones;
+SELECT * FROM treasures;
+SELECT * FROM user_treasure;
+
+SELECT
+    z.zone_id,
+    z.name,
+    COUNT(t.treasure_id) AS treasure_count
+FROM zones z
+LEFT JOIN treasures t
+    ON t.zone_id = z.zone_id
+GROUP BY z.zone_id;
