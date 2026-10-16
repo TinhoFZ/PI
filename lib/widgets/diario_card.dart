@@ -20,8 +20,10 @@ class DiarioCard extends StatelessWidget {
       maxWidth: 800,
     ),
     child: Card.outlined(
+      margin: EdgeInsets.zero,
       child: Row(
         children: [
+          
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.asset(
