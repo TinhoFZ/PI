@@ -23,7 +23,6 @@ class DiarioCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       child: Row(
         children: [
-          
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.asset(

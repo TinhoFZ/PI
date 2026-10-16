@@ -21,7 +21,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       leading: Padding(
-        padding: const EdgeInsets.only(left: 8.0),
+        padding: const EdgeInsets.only(left: 8.0, top: 8.0),
         child: IconButton.outlined(
           visualDensity: VisualDensity.compact,
           style: OutlinedButton.styleFrom(
@@ -30,7 +30,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
           ),
           icon: const Icon(
             Icons.menu,
-            size: 40,
+            size: 36,
           ),
           onPressed: () {
             // ADICIONAR AÇÃO PARA ABRIR O MENU LATERAL AQUI
@@ -39,11 +39,11 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         Padding(
-          padding: const EdgeInsets.only(right: 8.0),
+          padding: const EdgeInsets.only(right: 8.0, top: 8.0),
           child: IconButton.outlined(
             icon: const Icon(
               Icons.menu_book,
-              size: 40,
+              size: 36,
             ),
             onPressed: () {
               // ADICIONAR AÇÃO PARA ABRIR O MENU DE MISSÕES AQUI

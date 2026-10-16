@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'views/diario.dart';
 import 'widgets/bottom_nav_bar.dart';
 import 'widgets/app_bar.dart';
+import 'views/diario.dart';
+import 'views/inventario.dart';
 
 void main() {
   runApp(const MyApp());
@@ -48,10 +49,7 @@ class _MyAppState extends State<MyApp> {
 
           Diario(),
           
-          // Inventário
-          Card(
-            child: const Text('Conteúdo da página 3'),
-          ),
+          Inventario(),
           
           // Mapa ancestral
           Card(

@@ -37,23 +37,38 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
         destinations: const <NavigationDestination>[
           NavigationDestination(
-            icon: Icon(Icons.location_on),
+            icon: Icon(
+              Icons.location_on,
+              size: 36,  
+            ),
             label: 'Mapa',
           ),
           NavigationDestination(
-            icon: Icon(Icons.book),
+            icon: Icon(
+              Icons.book,
+              size: 36,
+            ),
             label: 'Diário',
           ),
           NavigationDestination(
-            icon: Icon(Icons.backpack),
+            icon: Icon(
+              Icons.backpack,
+              size: 36,
+            ),
             label: 'Inventário',
           ),
           NavigationDestination(
-            icon: Icon(Icons.map),
+            icon: Icon(
+              Icons.map,
+              size: 36,
+            ),
             label: 'Mapa ancestral',
           ),
           NavigationDestination(
-            icon: Icon(Icons.person),
+            icon: Icon(
+              Icons.person,
+              size: 36,
+            ),
             label: 'Perfil',
           ),
         ],
