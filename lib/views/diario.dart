@@ -10,7 +10,7 @@ class Diario extends StatelessWidget {
     return Column( 
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24.0),
+          padding: const EdgeInsets.only(top: 24.0, bottom: 48.0),
           child: Text(
             'Diário',
             style: TextStyle(
