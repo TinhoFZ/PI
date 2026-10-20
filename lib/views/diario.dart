@@ -23,7 +23,7 @@ class Diario extends StatelessWidget {
         Expanded(
           child: MenuGrande(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 spacing: 16.0,
                 children: [

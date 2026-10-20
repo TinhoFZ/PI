@@ -36,7 +36,8 @@ class _InventarioTesouroState extends State<InventarioTesouro> {
                 fontWeight: FontWeight.bold,
               )
             )
-            : Container(
+            : Padding(
+                padding: EdgeInsetsGeometry.symmetric(horizontal: 16),
                 child: Card.outlined(
                   margin: EdgeInsets.zero,
                   child: Row(
@@ -69,34 +70,37 @@ class _InventarioTesouroState extends State<InventarioTesouro> {
           ),
           Expanded(
             child: MenuGrande(
-              child: GridView.builder(
-                itemCount: tesouros.length,
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200.0,
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 8,
-                  childAspectRatio: 1,
-                ),
-                itemBuilder: (BuildContext context, int index) {
-                  final tesouro = tesouros[index];
-                  return InkWell(
-                    onTap: (){
-                      // Mostrar tesouro no lugar do texto de inventário
-                      setState(() {
-                        tesouroSelecionado = tesouro;
-                      });
-                    },
-                    child: GridTile(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: BorderRadius.circular(8.0),
+              child: Padding(
+                padding: EdgeInsetsGeometry.fromLTRB(16, 32, 16, 0),
+                child: GridView.builder(
+                  itemCount: tesouros.length,
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 200.0,
+                    crossAxisSpacing: 24,
+                    mainAxisSpacing: 24,
+                    childAspectRatio: 1,
+                  ),
+                  itemBuilder: (BuildContext context, int index) {
+                    final tesouro = tesouros[index];
+                    return InkWell(
+                      onTap: (){
+                        // Mostrar tesouro no lugar do texto de inventário
+                        setState(() {
+                          tesouroSelecionado = tesouro;
+                        });
+                      },
+                      child: GridTile(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[300],
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: tesouro.imagem,
                         ),
-                        child: tesouro.imagem,
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'widgets/bottom_nav_bar.dart';
 import 'widgets/app_bar.dart';
+import 'views/mapa.dart';
 import 'views/diario.dart';
 import 'views/inventario.dart';
 
@@ -36,16 +37,7 @@ class _MyAppState extends State<MyApp> {
 
         body: <Widget> [
           // Mapa
-          Stack(
-            children: [
-              Image.asset(
-                'assets/placeholder.jpg',
-                fit: BoxFit.fill,
-                width: double.infinity,
-                height: double.infinity,
-              ),
-            ],
-          ),
+          Mapa(),
 
           Diario(),
           
