@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
+import '../views/inventario_tesouro.dart';
 
-class Inventario extends StatelessWidget {
+class Inventario extends StatefulWidget {
   const Inventario({super.key});
+
+  @override
+  State<Inventario> createState() => _InventarioState();
+}
+
+class _InventarioState extends State<Inventario> {
+  final List<Widget> _telas = [
+    InventarioTesouro(), // Vestuario
+    InventarioTesouro(), // Tesouros
+    InventarioTesouro(), // Itens
+    InventarioTesouro(), // Habilidades
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +48,12 @@ class Inventario extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      // Ir para a parte do inventário clicada
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => _telas[index],
+                        ),
+                      );
                     },
                     child: GridTile(
                       child: Container(
