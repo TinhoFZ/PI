@@ -12,70 +12,84 @@ class InventarioTesouro extends StatefulWidget {
 class _InventarioTesouroState extends State<InventarioTesouro> {
 
   List<Tesouro> tesouros = [
-    Tesouro(nome: "Tesouro 1", descricao: "O primeiro tesouro a ser criado!", raride: "único", valor: 100, imagem: Icon(Icons.star, size: 36,)),
-    Tesouro(nome: "Tesouro 2", descricao: "O segundo tesouro a ser criado!", raride: "comum", valor: 10, imagem: Icon(Icons.image, size: 36,)),
-    Tesouro(nome: "Tesouro 3", descricao: "O terceiro tesouro a ser criado!", raride: "comum", valor: 10, imagem: Icon(Icons.image, size: 36,)),
-    Tesouro(nome: "Tesouro 4", descricao: "O quarto tesouro a ser criado!", raride: "comum", valor: 10, imagem: Icon(Icons.image, size: 36,)),
-    Tesouro(nome: "Tesouro 5", descricao: "O quinto tesouro a ser criado!", raride: "comum", valor: 10, imagem: Icon(Icons.image, size: 36,)),
+    Tesouro(nome: "Primeiro tesouro", descricao: "O primeiro tesouro a ser criado!", raride: "único", valor: 100, imagem: "assets/primeiro_tesouro.png"),
+    Tesouro(nome: "Tesouro 2", descricao: "O segundo tesouro a ser criado!", raride: "comum", valor: 10, imagem: "assets/placeholder.jpg"),
+    Tesouro(nome: "Tesouro 3", descricao: "O terceiro tesouro a ser criado!", raride: "comum", valor: 10, imagem: "assets/placeholder.jpg"),
+    Tesouro(nome: "Tesouro 4", descricao: "O quarto tesouro a ser criado!", raride: "comum", valor: 10, imagem: "assets/placeholder.jpg"),
+    Tesouro(nome: "Tesouro 5", descricao: "O quinto tesouro a ser criado!", raride: "comum", valor: 10, imagem: "assets/placeholder.jpg"),
   ];
 
   Tesouro? tesouroSelecionado;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final widthTela = MediaQuery.sizeOf(context).width;
+
+    return Scaffold( 
+      appBar: AppBar(),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 24.0),
-            child: tesouroSelecionado == null
-            ? const Text(
-              'Selecione algo para aparecer aqui!',
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-              )
-            )
-            : Padding(
-                padding: EdgeInsetsGeometry.symmetric(horizontal: 16),
-                child: Card.outlined(
-                  margin: EdgeInsets.zero,
-                  child: Row(
-                    children: [
-                      tesouroSelecionado!.imagem,
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              tesouroSelecionado!.nome,
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 4),
-                            Text(
-                              tesouroSelecionado!.descricao,
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ],
+          Expanded(
+            flex: 3,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 24.0),
+              child: Center(
+                child: tesouroSelecionado == null
+                ? const Text(
+                  'Selecione algo para aparecer aqui!',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  )
+                )
+                : SizedBox( 
+                    width: widthTela * 0.9,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Image.asset(
+                          tesouroSelecionado!.imagem,
+                          height: 150,
+                          width: 150,
                         ),
-                      ),
-                    ],
+                        SizedBox(width: 8,),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                tesouroSelecionado!.nome,
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                tesouroSelecionado!.descricao,
+                                softWrap: true,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
               ),
+            ),
           ),
           Expanded(
+            flex: 7,
             child: MenuGrande(
               child: Padding(
                 padding: EdgeInsetsGeometry.fromLTRB(16, 32, 16, 0),
                 child: GridView.builder(
                   itemCount: tesouros.length,
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200.0,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
                     crossAxisSpacing: 24,
                     mainAxisSpacing: 24,
                     childAspectRatio: 1,
@@ -95,7 +109,7 @@ class _InventarioTesouroState extends State<InventarioTesouro> {
                             color: Colors.grey[300],
                             borderRadius: BorderRadius.circular(8.0),
                           ),
-                          child: tesouro.imagem,
+                          child: Image.asset(tesouro.imagem),
                         ),
                       ),
                     );

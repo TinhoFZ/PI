@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
-
 class Tesouro {
   final String nome;
   final String descricao;
-  final String raride; //Talvez ENUM?
+  final String raride; // Talvez ENUM?
   final double valor;
-  final Icon imagem; // Mudar para imagem no futuro
+  final String imagem; // Caminho para imagem
 
   const Tesouro({
     required this.nome,

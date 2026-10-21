@@ -11,11 +11,11 @@ class Inventario extends StatefulWidget {
 }
 
 class _InventarioState extends State<Inventario> {
-  final List<Widget> _telas = [
-    InventarioTesouro(), // Vestuario
-    InventarioTesouro(), // Tesouros
-    InventarioTesouro(), // Itens
-    InventarioTesouro(), // Habilidades
+  final List _telas = [
+    (acao: InventarioTesouro(), imagem: "assets/placeholder.jpg"), // Vestuario
+    (acao: InventarioTesouro(), imagem: "assets/primeiro_tesouro.png"), // Tesouros
+    (acao: InventarioTesouro(), imagem: "assets/placeholder.jpg"), // Itens
+    (acao: InventarioTesouro(), imagem: "assets/placeholder.jpg"), // Habilidades
   ];
 
   @override
@@ -38,8 +38,8 @@ class _InventarioState extends State<Inventario> {
           child: LayoutBuilder(
             builder: (context, constraints) {
 
-              const padding = 16.0;
-              const spacing = 16.0;
+              const padding = 24.0;
+              const spacing = 24.0;
 
               final widthDisponivel = constraints.maxWidth - padding * 2;
               final heightDisponivel = constraints.maxHeight - padding * 2;
@@ -65,7 +65,7 @@ class _InventarioState extends State<Inventario> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => _telas[index],
+                          builder: (context) => _telas[index].acao,
                         ),
                       );
                     },
@@ -75,7 +75,7 @@ class _InventarioState extends State<Inventario> {
                           color: Colors.grey[300],
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        child: const Icon(Icons.image, size: 56),
+                        child: Image.asset(_telas[index].imagem),
                       ),
                     ),
                   );
