@@ -18,6 +18,9 @@ class _InventarioState extends State<Inventario> {
 
   @override
   Widget build(BuildContext context) {
+    final tamanhoTela = MediaQuery.sizeOf(context);
+    final pixelRatio = MediaQuery.devicePixelRatioOf(context);
+
     return Column(
       children: [
         Padding(
@@ -31,6 +34,7 @@ class _InventarioState extends State<Inventario> {
           ),
         ),
         Expanded(
+          flex: 6,
           child: Center(
             child: SizedBox(
               width: 564,
@@ -70,28 +74,31 @@ class _InventarioState extends State<Inventario> {
             ),
           ),
         ),
-        SizedBox(
-          height: 400,
+        Expanded(
+          flex: 4,
           child: Align(
             alignment: Alignment.center,
-            child: 
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 48.0),
-              child: Container(
-                height: 200,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(
-                    color: Colors.grey,
-                    width: 1.0,
-                  ),
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return Center(
+                  child: Container(
+                    width: constraints.maxWidth * 0.8,
+                    height: constraints.maxHeight * 0.8,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 1.0,
+                      ),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
 
-                child: Center(
-                  child: Text('Informações do inventário'),
-                ),
-              ),
+                    child: Center(
+                      child: Text('Informações do inventário'),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ),
