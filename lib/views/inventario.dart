@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import '../views/inventario_tesouro.dart';
 
@@ -18,8 +20,6 @@ class _InventarioState extends State<Inventario> {
 
   @override
   Widget build(BuildContext context) {
-    final tamanhoTela = MediaQuery.sizeOf(context);
-    final pixelRatio = MediaQuery.devicePixelRatioOf(context);
 
     return Column(
       children: [
@@ -35,18 +35,28 @@ class _InventarioState extends State<Inventario> {
         ),
         Expanded(
           flex: 6,
-          child: Center(
-            child: SizedBox(
-              width: 564,
-              height: 564,
-              child: GridView.builder(
-                padding: const EdgeInsets.only(top: 0),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+
+              const padding = 16.0;
+              const spacing = 16.0;
+
+              final widthDisponivel = constraints.maxWidth - padding * 2;
+              final heightDisponivel = constraints.maxHeight - padding * 2;
+
+              final tamanhoBloco = math.min(
+                (widthDisponivel - spacing) / 2,
+                (heightDisponivel - spacing) / 2,
+              );
+
+              return GridView.builder(
+                padding: const EdgeInsets.all(padding),
                 physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  mainAxisSpacing: 64.0,
-                  crossAxisSpacing: 64.0,
-                  mainAxisExtent: 250.0,
+                  mainAxisSpacing: spacing,
+                  crossAxisSpacing: spacing,
+                  mainAxisExtent: tamanhoBloco,
                 ),
                 itemCount: 4,
                 itemBuilder: (context, index) {
@@ -70,8 +80,8 @@ class _InventarioState extends State<Inventario> {
                     ),
                   );
                 },
-              ),
-            ),
+              );
+            },
           ),
         ),
         Expanded(
