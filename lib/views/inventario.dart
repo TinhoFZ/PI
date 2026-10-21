@@ -21,7 +21,7 @@ class _InventarioState extends State<Inventario> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24.0),
+          padding: const EdgeInsets.only(top: 24.0, bottom: 28.0),
           child: Text(
             'Inventário',
             style: TextStyle(
