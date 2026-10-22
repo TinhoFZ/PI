@@ -1,7 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import '../views/inventario_tesouro.dart';
+import '../views/inventario_tesouro.dart'; 
+import '../views/inventario_item.dart';
 
 class Inventario extends StatefulWidget {
   const Inventario({super.key});
@@ -14,7 +15,7 @@ class _InventarioState extends State<Inventario> {
   final List _telas = [
     (acao: InventarioTesouro(), imagem: "assets/placeholder.jpg"), // Vestuario
     (acao: InventarioTesouro(), imagem: "assets/primeiro_tesouro.png"), // Tesouros
-    (acao: InventarioTesouro(), imagem: "assets/placeholder.jpg"), // Itens
+    (acao: InventarioItem(), imagem: "assets/primeiro_item.png"), // Itens
     (acao: InventarioTesouro(), imagem: "assets/placeholder.jpg"), // Habilidades
   ];
 
