@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../widgets/menu_grande.dart';
 import '../models/tesouro.dart';
+import '../widgets/menu_grande.dart';
+import '../widgets/inventario_mostruario.dart';
 
 class InventarioTesouro extends StatefulWidget {
   const InventarioTesouro({super.key});
@@ -23,8 +24,6 @@ class _InventarioTesouroState extends State<InventarioTesouro> {
 
   @override
   Widget build(BuildContext context) {
-    final widthTela = MediaQuery.sizeOf(context).width;
-
     return Scaffold( 
       appBar: AppBar(),
       body: Column(
@@ -33,51 +32,11 @@ class _InventarioTesouroState extends State<InventarioTesouro> {
             flex: 3,
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 24.0),
-              child: Center(
-                child: tesouroSelecionado == null
-                ? const Text(
-                  'Selecione algo para aparecer aqui!',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  )
-                )
-                : SizedBox( 
-                    width: widthTela * 0.9,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          tesouroSelecionado!.imagem,
-                          height: 150,
-                          width: 150,
-                        ),
-                        SizedBox(width: 8,),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                tesouroSelecionado!.nome,
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                tesouroSelecionado!.descricao,
-                                softWrap: true,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+              child: InventarioMostruario(
+                selecionado: tesouroSelecionado, 
+                nome: tesouroSelecionado?.nome, 
+                imagem: tesouroSelecionado?.imagem, 
+                descricao: tesouroSelecionado?.descricao,
               ),
             ),
           ),

@@ -10,7 +10,7 @@ class DiarioCard extends StatelessWidget {
     required this.titulo,
     required this.data,
     super.key
-    });
+  });
 
   @override
   Widget build(BuildContext context) {
