@@ -1,3 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 import 'package:flutter/material.dart';
 import 'widgets/bottom_nav_bar.dart';
 import 'widgets/app_bar.dart';
@@ -5,7 +8,12 @@ import 'views/mapa.dart';
 import 'views/diario.dart';
 import 'views/inventario.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MyApp());
 }
 
