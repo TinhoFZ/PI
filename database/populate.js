@@ -1,5 +1,6 @@
 const admin = require("firebase-admin");
 const { GeoPoint } = require("firebase-admin/firestore");
+const { geohashForLocation } = require("geofire-common");
 
 const serviceAccount = require("./serviceAccountKey.json");
 
@@ -57,14 +58,16 @@ async function main() {
     name: "Marco Zero",
     description: "Praça histórica do Recife.",
     coordinates: new GeoPoint(-8.0631, -34.8711),
-    type: "poi"
+    type: "poi",
+    geohash: geohashForLocation([latitude, longitude])
   });
 
   await zoneRef.collection("locations").add({
     name: "Paço do Frevo",
     description: "Centro de referência do frevo.",
     coordinates: new GeoPoint(-8.0608, -34.8711),
-    type: "poi"
+    type: "poi",
+    geohash: geohashForLocation([latitude, longitude])
   });
 
   const questRef = await db.collection("quests").add({
