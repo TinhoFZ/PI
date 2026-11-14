@@ -1,7 +1,7 @@
 const admin = require("firebase-admin");
 const { GeoPoint } = require("firebase-admin/firestore");
 
-const serviceAccount = require("./serviceAccountKey.json");
+const serviceAccount = require("./serviceAccount.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)

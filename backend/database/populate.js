@@ -2,7 +2,7 @@ const admin = require("firebase-admin");
 const { GeoPoint } = require("firebase-admin/firestore");
 const { geohashForLocation } = require("geofire-common");
 
-const serviceAccount = require("../serviceAccount.json");
+const serviceAccount = require("./serviceAccount.json");
 
 const app = admin.initializeApp({
     credential: admin.cert(serviceAccount)
